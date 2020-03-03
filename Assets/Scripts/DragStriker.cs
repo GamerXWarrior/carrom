@@ -16,6 +16,8 @@ public class DragStriker : MonoBehaviour {
     void Start () {
         m_Speed = 10.0f;
         SliderDis = SliderDis.GetComponent<Slider> ();
+        // _stricker.resetStriker ();
+        _stricker.SetPosition (SliderDis.value);
         // SliderDis.interactable = false;
         // private bool isStopped = _stricker.isStrikerIsStopped;
     }
@@ -23,6 +25,7 @@ public class DragStriker : MonoBehaviour {
     public void onMove () {
         SliderDis.minValue = -80;
         SliderDis.maxValue = 80;
+        Debug.Log ("on move ");
         _stricker.SetPosition (SliderDis.value);
         _stricker.isPositionSetting = true;
         _stricker._isPlayerReady = false;
@@ -30,8 +33,14 @@ public class DragStriker : MonoBehaviour {
 
     }
 
+    public void onPointerDown () {
+        _stricker.isPositionSetting = true;
+        _stricker._isPlayerReady = false;
+    }
+
     public void onMoveStart () {
-        _stricker.resetStriker ();
+        Debug.Log ("on move START");
+        // _stricker.resetStriker ();
         _stricker.isPositionSetting = true;
         _stricker._isPlayerReady = false;
         _stricker._isChanceDone = false;
@@ -39,7 +48,8 @@ public class DragStriker : MonoBehaviour {
     }
 
     public void onMoveEnd () {
-        _stricker.resetStriker ();
+        Debug.Log ("on move end");
+        // _stricker.resetStriker ();
         _stricker.SetPosition (SliderDis.value);
         _stricker.isPositionSetting = false;
         _stricker._isPlayerReady = true;

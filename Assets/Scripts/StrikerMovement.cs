@@ -7,8 +7,8 @@ public class StrikerMovement : MonoBehaviour {
     public float thrust = 10.0f;
     private Rigidbody2D striker;
     public bool isPressed = false;
-    public bool isPositionSetting = true;
-    public bool _isPlayerReady = false;
+    public bool isPositionSetting = false;
+    public bool _isPlayerReady = true;
     public bool _isChanceDone = false;
     public GameObject aimArrow;
     public Vector3 _direction; // = Vector3 (0, 0, 0);
@@ -21,6 +21,9 @@ public class StrikerMovement : MonoBehaviour {
         striker = transform.GetComponent<Rigidbody2D> ();
         gui.SetActive (false);
         aimArrow.SetActive (false);
+        // Debug.Log ("player ready " + _isPlayerReady);
+        // resetStriker ();
+
     }
 
     public void SetPosition (float xValue) {
@@ -62,8 +65,21 @@ public class StrikerMovement : MonoBehaviour {
     void Update () {
         if (isPositionSetting) {
             isPressed = false;
+            gui.SetActive (isPressed);
+            aimArrow.SetActive (isPressed);
+            Debug.Log ("return");
             return;
         }
+
+        if (_isPlayerReady) {
+            Debug.Log ("isposition  " + isPositionSetting);
+            Debug.Log ("is ready   " + _isPlayerReady);
+            if (Input.GetMouseButton (0)) {
+                isPressed = true;
+                Debug.Log ("is pressed " + isPressed);
+            }
+        }
+
         if (isPressed) {
 
             gui.SetActive (isPressed);
@@ -73,16 +89,11 @@ public class StrikerMovement : MonoBehaviour {
             if (Input.GetMouseButtonUp (0)) {
                 hitStriker (_direction);
                 isPressed = false;
-                _isPlayerReady = false;
-                // isPositionSetting = true;
+                // _isPlayerReady = false;
+                isPositionSetting = true;
                 isPositionSetting = false;
                 gui.SetActive (isPressed);
                 aimArrow.SetActive (isPressed);
-            }
-        }
-        if (_isPlayerReady) {
-            if (Input.GetMouseButton (0)) {
-                isPressed = true;
             }
         }
 
